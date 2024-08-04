@@ -1,3 +1,4 @@
+import axios from "axios";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import ImageModal from "./ImageModal/ImageModal";
@@ -5,20 +6,28 @@ import Loader from "./Loader/Loader";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import SearchBar from "./SearchBar/SearchBar";
 
+import { useEffect, useState } from "react";
+
 const App = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(e);
-  };
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.unsplash.com/search/photos?client_id=SGR-b_RMZ6ScDLeVlF4_miV43r2BL_2fZC8eKwByhiA&query=nature"
+      )
+      .then((res) => setResults(res.data.results))
+      .catch();
+  }, []);
 
   return (
     <div>
-      <ErrorMessage />
-      <ImageGallery />
-      <ImageModal />
+      {/* <ErrorMessage /> */}
+      <ImageGallery pictures={results} />
+      {/* <ImageModal />
       <Loader />
       <LoadMoreBtn />
-      <SearchBar onSubmit={handleSubmit} />
+      <SearchBar onSubmit={handleSubmit} /> */}
     </div>
   );
 };
