@@ -10,14 +10,18 @@ import { useEffect, useState } from "react";
 
 const App = () => {
   const [results, setResults] = useState([]);
-
   useEffect(() => {
-    axios
-      .get(
-        "https://api.unsplash.com/search/photos?client_id=SGR-b_RMZ6ScDLeVlF4_miV43r2BL_2fZC8eKwByhiA&query=nature"
-      )
-      .then((res) => setResults(res.data.results))
-      .catch();
+    const getData = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.unsplash.com/search/photos?client_id=SGR-b_RMZ6ScDLeVlF4_miV43r2BL_2fZC8eKwByhiA&query=nature"
+        );
+        setResults(response.data.results);
+      } catch (error) {
+        console.log("error");
+      }
+    };
+    getData();
   }, []);
 
   return (
@@ -33,3 +37,12 @@ const App = () => {
 };
 
 export default App;
+
+// useEffect(() => {
+//   axios
+//     .get(
+//       "https://api.unsplash.com/search/photos?client_id=SGR-b_RMZ6ScDLeVlF4_miV43r2BL_2fZC8eKwByhiA&query=nature"
+//     )
+//     .then((res) => setResults(res.data.results))
+//     .catch();
+// }, []);
