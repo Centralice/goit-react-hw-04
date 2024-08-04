@@ -11,13 +11,18 @@ import { useEffect, useState } from "react";
 const App = () => {
   const [results, setResults] = useState([]);
   const [query, setQuery] = useState("dog");
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const getData = async () => {
       try {
+        setIsLoading(true);
         const response = await fetchData(query);
         setResults(response.results);
       } catch (error) {
         console.log("error");
+      } finally {
+        setIsLoading(false);
       }
     };
     getData();
@@ -26,11 +31,11 @@ const App = () => {
   return (
     <div>
       {/* <ErrorMessage /> */}
-      <ImageGallery pictures={results} />
       {/* <ImageModal />
-      <Loader />
       <LoadMoreBtn /> */}
       <SearchBar setQuery={setQuery} />
+      <ImageGallery pictures={results} />
+      <Loader isLoading={isLoading} />
     </div>
   );
 };
