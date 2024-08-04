@@ -1,17 +1,30 @@
+import { Formik, Form, Field } from "formik";
 import s from "./SearchBar.module.css";
 
-const SearchBar = ({ onSubmit }) => {
+const SearchBar = ({ setQuery }) => {
+  const initialValues = {
+    query: "",
+  };
+
+  const handleSubmit = (values, actions) => {
+    setQuery(values.query);
+    actions.resetForm();
+  };
+
   return (
     <header>
-      <form>
-        <input
-          type="text"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search images and photos"
-        />
-        <button onClick={onSubmit} type="submit">Search</button>
-      </form>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Form>
+          <Field
+            name="query"
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+          ></Field>
+          <button type="submit">Search</button>
+        </Form>
+      </Formik>
     </header>
   );
 };

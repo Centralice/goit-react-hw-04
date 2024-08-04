@@ -10,17 +10,18 @@ import { useEffect, useState } from "react";
 
 const App = () => {
   const [results, setResults] = useState([]);
+  const [query, setQuery] = useState("dog");
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetchData("marvel");
+        const response = await fetchData(query);
         setResults(response.results);
       } catch (error) {
         console.log("error");
       }
     };
     getData();
-  }, []);
+  }, [query]);
 
   return (
     <div>
@@ -28,8 +29,8 @@ const App = () => {
       <ImageGallery pictures={results} />
       {/* <ImageModal />
       <Loader />
-      <LoadMoreBtn />
-      <SearchBar onSubmit={handleSubmit} /> */}
+      <LoadMoreBtn /> */}
+      <SearchBar setQuery={setQuery} />
     </div>
   );
 };
