@@ -2,7 +2,7 @@ import s from "./ImageModal.module.css"
 
 const ImageModal = () => {
   return (
-    <div>ImageModal</div>
+    <h1>Img!!!!!!</h1>
   )
 }
 

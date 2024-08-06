@@ -6,7 +6,7 @@ export const fetchData = async (query, page = 1) => {
     {
       params: {
         query,
-        per_page: 9,
+        per_page: 12,
         page,
       },
     }

@@ -1,7 +1,10 @@
 import { Formik, Form, Field } from "formik";
+import toast, { Toaster } from "react-hot-toast";
 import s from "./SearchBar.module.css";
 
-const SearchBar = ({ setQuery }) => {
+const SearchBar = ({ setQuery, setResults }) => {
+  const notify = () => toast("I'm not a psychic you know...");
+
   const initialValues = {
     query: "",
   };
@@ -11,22 +14,27 @@ const SearchBar = ({ setQuery }) => {
       setQuery(values.query);
       actions.resetForm();
     } else {
-      alert("What are you looking for??");
+      notify();
+      setResults([]);
     }
   };
 
   return (
-    <header>
+    <header className={s.header}>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form>
           <Field
+            className={s.input}
             name="query"
             type="text"
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
           ></Field>
-          <button type="submit">Search</button>
+          <button className={s.btn} type="submit">
+            Search
+          </button>
+          <Toaster />
         </Form>
       </Formik>
     </header>

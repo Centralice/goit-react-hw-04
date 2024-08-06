@@ -1,9 +1,11 @@
-import s from "./ImageCard.module.css"
+import s from "./ImageCard.module.css";
 
-const ImageCard = () => {
+const ImageCard = ({ picture}) => {
   return (
-    <div>ImageCard</div>
-  )
-}
+    <div>
+      <img className={s.img} src={picture.urls.small} alt={picture.alt_description} />
+    </div>
+  );
+};
 
 export default ImageCard;
