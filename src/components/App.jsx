@@ -21,7 +21,7 @@ const App = () => {
         setError(false);
         setIsLoading(true);
         const response = await fetchData(query, page);
-        setResults(prev => [...prev, ...response.results]);
+        setResults((prev) => [...prev, ...response.results]);
       } catch (error) {
         setResults([]);
         setError(true);
@@ -32,10 +32,16 @@ const App = () => {
     getData();
   }, [query, page]);
 
+  const handleSetQuery = (query) => {
+    setQuery(query);
+    setResults([]);
+    setPage(1);
+  };
+
   return (
     <div>
       {/* <ImageModal /> */}
-      <SearchBar setQuery={setQuery} />
+      <SearchBar setQuery={handleSetQuery} />
       <Loader isLoading={isLoading} />
       <ErrorMessage error={error} />
       <ImageGallery pictures={results} />
