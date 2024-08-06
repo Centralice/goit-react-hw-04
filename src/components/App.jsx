@@ -49,7 +49,7 @@ const App = () => {
       <Loader isLoading={isLoading} />
       <ErrorMessage error={error} />
       <ImageGallery pictures={results} />
-      {total > page && <LoadMoreBtn setPage={setPage} />}
+      {total > page && !isLoading && <LoadMoreBtn setPage={setPage} />}
     </div>
   );
 };
