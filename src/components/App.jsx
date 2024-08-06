@@ -14,6 +14,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const getData = async () => {
@@ -22,6 +23,9 @@ const App = () => {
         setIsLoading(true);
         const response = await fetchData(query, page);
         setResults((prev) => [...prev, ...response.results]);
+        setTotal(response.total_pages);
+        console.log(total);
+        
       } catch (error) {
         setResults([]);
         setError(true);
@@ -45,7 +49,7 @@ const App = () => {
       <Loader isLoading={isLoading} />
       <ErrorMessage error={error} />
       <ImageGallery pictures={results} />
-      <LoadMoreBtn setPage={setPage} />
+      {total > page && <LoadMoreBtn setPage={setPage} />}
     </div>
   );
 };
