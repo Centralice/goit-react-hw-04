@@ -46,9 +46,9 @@ const App = () => {
     <div>
       {/* <ImageModal /> */}
       <SearchBar setQuery={handleSetQuery} />
-      <Loader isLoading={isLoading} />
       <ErrorMessage error={error} />
       <ImageGallery pictures={results} />
+      <Loader isLoading={isLoading} />
       {total > page && !isLoading && <LoadMoreBtn setPage={setPage} />}
     </div>
   );
