@@ -1,7 +1,23 @@
+import { ThreeDots } from "react-loader-spinner";
 import s from "./Loader.module.css";
 
-const Loader = ({isLoading}) => {
-  return <div>{isLoading && <h1>Loading...</h1>}</div>;
+const Loader = ({ isLoading }) => {
+  return (
+    <div>
+      {isLoading && (
+        <ThreeDots
+          visible={true}
+          height="80"
+          width="80"
+          color="#4fa94d"
+          radius="9"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      )}
+    </div>
+  );
 };
 
 export default Loader;

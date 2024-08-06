@@ -12,41 +12,36 @@ const App = () => {
   const [results, setResults] = useState([]);
   const [query, setQuery] = useState("dog");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const getData = async () => {
       try {
+        setError(false);
         setIsLoading(true);
-        const response = await fetchData(query);
-        setResults(response.results);
+        const response = await fetchData(query, page);
+        setResults(prev => [...prev, ...response.results]);
       } catch (error) {
-        console.log("error");
+        setResults([]);
+        setError(true);
       } finally {
         setIsLoading(false);
       }
     };
     getData();
-  }, [query]);
+  }, [query, page]);
 
   return (
     <div>
-      {/* <ErrorMessage /> */}
-      {/* <ImageModal />
-      <LoadMoreBtn /> */}
+      {/* <ImageModal /> */}
       <SearchBar setQuery={setQuery} />
-      <ImageGallery pictures={results} />
       <Loader isLoading={isLoading} />
+      <ErrorMessage error={error} />
+      <ImageGallery pictures={results} />
+      <LoadMoreBtn setPage={setPage} />
     </div>
   );
 };
 
 export default App;
-
-// useEffect(() => {
-//   axios
-//     .get(
-//       "https://api.unsplash.com/search/photos?client_id=SGR-b_RMZ6ScDLeVlF4_miV43r2BL_2fZC8eKwByhiA&query=nature"
-//     )
-//     .then((res) => setResults(res.data.results))
-//     .catch();
-// }, []);

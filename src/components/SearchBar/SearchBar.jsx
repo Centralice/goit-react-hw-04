@@ -7,8 +7,12 @@ const SearchBar = ({ setQuery }) => {
   };
 
   const handleSubmit = (values, actions) => {
-    setQuery(values.query);
-    actions.resetForm();
+    if (values.query) {
+      setQuery(values.query);
+      actions.resetForm();
+    } else {
+      alert("What are you looking for??");
+    }
   };
 
   return (
