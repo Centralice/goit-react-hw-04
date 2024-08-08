@@ -8,16 +8,28 @@ import { fetchData } from "../services/api";
 
 import { useEffect, useState } from "react";
 
-import Modal from "react-modal";
-
 const App = () => {
-
   const [results, setResults] = useState([]);
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const[selectedPicture, setSelectedPicture] = useState(null);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const onPictureClick = (link) => {
+    setSelectedPicture(link);  
+    setModalIsOpen(true); 
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -47,14 +59,20 @@ const App = () => {
 
   return (
     <div>
-      <SearchBar
-        setQuery={handleSetQuery}
-        setResults={setResults}
-      />
+      <SearchBar setQuery={handleSetQuery} setResults={setResults} />
       <ErrorMessage error={error} />
-      <ImageGallery pictures={results} />
+      <ImageGallery onPictureClick={onPictureClick} pictures={results} />
       <Loader isLoading={isLoading} />
-      {total > page && !isLoading && results.length > 0 && <LoadMoreBtn setPage={setPage} />}
+      {total > page && !isLoading && results.length > 0 && (
+        <LoadMoreBtn setPage={setPage} />
+      )}
+      {modalIsOpen && selectedPicture && (
+        <ImageModal
+          selectedPicture={selectedPicture}
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 };

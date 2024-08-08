@@ -1,9 +1,18 @@
-import s from "./ImageModal.module.css"
+import s from "./ImageModal.module.css";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
-const ImageModal = () => {
+const ImageModal = ({ selectedPicture, modalIsOpen, closeModal }) => {
   return (
-    <h1>Img!!!!!!</h1>
-  )
-}
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      className={s.modal}
+      overlayClassName={s.overlay}
+    >
+      <img src={selectedPicture} />
+    </Modal>
+  );
+};
 
 export default ImageModal;
